@@ -30,7 +30,6 @@ def create_user(db: Session, user: user_schema.UserCreate) -> user_schema.User:
         db.refresh(db_user)
         return db_user
     except:
-        db.rollback()
         raise HTTPException(status_code=409, detail="Email already exists")
 
 # Get a user by id
@@ -51,7 +50,6 @@ def update_name(db: Session, user_id: str, name: str) -> user_schema.User:
         db.refresh(db_user)
         return db_user
     except:
-        db.rollback()
         print("Error")
 
 # Update a user's email
@@ -66,7 +64,6 @@ def update_email(db: Session, user_id: str, email: str) -> user_schema.User:
         db.refresh(db_user)
         return db_user
     except:
-        db.rollback()
         print("Error")
 
 # Update a user's gender
@@ -81,7 +78,6 @@ def update_gender(db: Session, user_id: str, gender: str) -> user_schema.User:
         db.refresh(db_user)
         return db_user
     except:
-        db.rollback()
         print("Error")
 
 # Update a user's password
@@ -100,5 +96,4 @@ def update_password(db: Session, user_id: str, password: str, new_password: str)
         db.refresh(db_user)
         return db_user
     except:
-        db.rollback()
         print("Error")

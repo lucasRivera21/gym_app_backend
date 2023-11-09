@@ -4,7 +4,7 @@ from typing import List
 
 
 class WeightBase(BaseModel):
-    weight: int
+    weight: float
     magnitude: str
 
 

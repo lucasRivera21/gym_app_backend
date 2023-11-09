@@ -4,6 +4,8 @@ from sqlalchemy.orm import Session
 from db import SessionLocal, engine, Base
 from schemas import user_schema
 from routes import login
+from routes.login import oauth2_scheme
+from security.auth import get_user_id
 user = APIRouter(prefix="/users", tags=["users"])
 
 
@@ -11,21 +13,28 @@ def get_db():
     db = SessionLocal()
     try:
         yield db
+    except:
+        db.rollback()
     finally:
         db.close()
 # Get all users
 
 
+'''
 @user.get("/", status_code=200, response_model=list[user_schema.User])
 def read_users(db: Session = Depends(get_db)):
     users = crud_user.get_users(db)
     return users
 
-    # Get a user by id
+    
+'''
+
+# Get a user by id
 
 
-@user.get("/{user_id}", status_code=200, response_model=user_schema.User)
-def read_user(user_id: str, db: Session = Depends(get_db)):
+@user.get("/", status_code=200, response_model=user_schema.User)
+def read_user(user_id: str = Depends(get_user_id), db: Session = Depends(get_db)):
+    # get_current_user(db, token)
     return crud_user.get_user(db=db, user_id=user_id)
 
 
