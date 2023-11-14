@@ -1,4 +1,6 @@
 from pydantic import BaseModel
+from schemas.exercise_schema import Exercise
+from typing import List
 
 
 class ExerciseUserBase(BaseModel):
@@ -12,6 +14,7 @@ class ExerciseUserCreate(ExerciseUserBase):
 class ExercisesUser(ExerciseUserBase):
     id: str
     routine_id: str
+    exercise: Exercise
 
     class Config:
         orm_mode = True
